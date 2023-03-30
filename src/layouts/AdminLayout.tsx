@@ -1,11 +1,15 @@
 import { Link, Outlet } from "react-router-dom";
 
+import { logout } from "@/app/authSlice";
+import { useAppDispatch } from "@/app/store";
+
 const AdminLayout = () => {
+  const dispatch = useAppDispatch();
   return (
     <div>
       <div className="drawer drawer-mobile">
         <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
-        <div className="drawer-content">
+        <div className="drawer-content bg-gray-100 p-8">
           <div>
             <label
               htmlFor="my-drawer-2"
@@ -37,6 +41,18 @@ const AdminLayout = () => {
             <li>
               <Link to="/">Dashboard</Link>
             </li>
+            <li>
+              <Link to="/posts">Posts</Link>
+            </li>
+            {/* logout button at bottom */}
+            <div className="absolute bottom-0 w-full left-0 p-4">
+              <button
+                className="btn btn-error w-full text-center text-white"
+                onClick={() => dispatch(logout())}
+              >
+                Logout
+              </button>
+            </div>
           </ul>
         </div>
       </div>
