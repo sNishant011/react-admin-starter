@@ -7,6 +7,12 @@
 - Redux Toolkit
 - Eslint
 - Prettier
-- Tailwind CSS
+- Chakra UI
+- React Hook Form
 
 ## Checkout other branches for more bindings
+
+
+# CREDITS
+
+- [Chakra Templates](https://chakra-templates.dev/)
