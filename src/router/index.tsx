@@ -1,3 +1,4 @@
+import { Spinner } from "@chakra-ui/react";
 import { lazy, Suspense } from "react";
 import { createBrowserRouter } from "react-router-dom";
 
@@ -24,7 +25,7 @@ const router = createBrowserRouter([
           {
             path: "posts",
             element: (
-              <Suspense fallback={<div>Loading...</div>}>
+              <Suspense fallback={<Spinner />}>
                 <PostList />
               </Suspense>
             ),
@@ -32,7 +33,7 @@ const router = createBrowserRouter([
           {
             path: "posts/create",
             element: (
-              <Suspense fallback={<div>Loading...</div>}>
+              <Suspense fallback={<Spinner />}>
                 <CreatePost />
               </Suspense>
             ),
