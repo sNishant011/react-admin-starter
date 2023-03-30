@@ -7,9 +7,7 @@ import {
   FormLabel,
   Heading,
   Input,
-  Link,
   Stack,
-  Text,
   useColorModeValue,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";

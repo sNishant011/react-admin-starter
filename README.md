@@ -12,7 +12,6 @@
 
 ## Checkout other branches for more bindings
 
-
 # CREDITS
 
 - [Chakra Templates](https://chakra-templates.dev/)

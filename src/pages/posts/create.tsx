@@ -1,67 +1,98 @@
-import { FormEvent } from "react";
+import {
+  Button,
+  chakra,
+  FormControl,
+  FormErrorMessage,
+  FormLabel,
+  Heading,
+  Input,
+  Textarea,
+  useToast,
+} from "@chakra-ui/react";
+import { useForm } from "react-hook-form";
+
+import { Post } from "@/types";
 
 import { useCreatePostMutation } from "./postApiSlice";
 
 const CreatePost = () => {
   const [createPost, { isLoading: isPostAdding }] = useCreatePostMutation();
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm<Post>();
+  const toast = useToast();
 
-  const handlePostAdd = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    const title = formData.get("title");
-    const body = formData.get("body");
-    if (typeof title === "string" && typeof body === "string") {
-      const post: Post = { title, body, userId: 11 };
-      createPost({ post })
-        .unwrap()
-        .then((res) => {
-          console.log(res);
-          alert("Post added");
-        })
-        .catch((err) => {
-          console.log(err);
-          alert("Error adding post");
+  const handlePostAdd = (data: Post) => {
+    createPost({ post: data })
+      .unwrap()
+      .then((res) => {
+        console.log(res);
+        toast({
+          title: "Success",
+          description: "Post created successfully",
+          status: "success",
+          duration: 5000,
+          isClosable: true,
+          position: "top-right",
         });
-    }
+      })
+      .catch((err) => {
+        console.log(err);
+        toast({
+          title: "Error",
+          description: "Something went wrong",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+          position: "top-right",
+        });
+      });
   };
   return (
     <div>
-      <h1 className="text-3xl font-bold text-gray-900">Create Post</h1>
+      <Heading mb={"1rem"}>Create Post</Heading>
 
-      <form onSubmit={handlePostAdd} className="flex flex-col gap-4">
-        <div>
-          <label htmlFor="title" className="label">
-            Title
-          </label>
-          <input
-            type="text"
-            id="title"
-            placeholder="Title"
-            className="input input-bordered w-full max-w-xs"
-            name="title"
-            required
+      <chakra.form
+        maxW={"xl"}
+        onSubmit={handleSubmit(handlePostAdd)}
+        display={"flex"}
+        flexDirection={"column"}
+        gap={4}
+        backgroundColor={"white"}
+        p={8}
+        borderRadius={"md"}
+      >
+        <FormControl isInvalid={Boolean(errors.title)}>
+          <FormLabel>Title</FormLabel>
+          <Input
+            {...register("title", {
+              required: "Title is required",
+            })}
           />
-        </div>
-        <div>
-          <label htmlFor="body" className="label">
-            Body
-          </label>
-          <input
-            type="text"
-            placeholder="Content"
-            name="body"
-            id="body"
-            className="input input-bordered w-full max-w-xs"
-            required
+          <FormErrorMessage>{errors.title?.message}</FormErrorMessage>
+        </FormControl>
+
+        <FormControl isInvalid={Boolean(errors.title)}>
+          <FormLabel>Content</FormLabel>
+          <Textarea
+            {...register("body", {
+              required: "Body is required",
+            })}
           />
-        </div>
-        <button
+          <FormErrorMessage>{errors.title?.message}</FormErrorMessage>
+        </FormControl>
+        <Button
           className={`btn btn-primary w-fit ${isPostAdding && "loading"}`}
           type="submit"
+          isLoading={isPostAdding}
+          loadingText="Creating"
+          colorScheme={"blue"}
         >
-          {isPostAdding ? "Adding Post" : "Add Post"}
-        </button>
-      </form>
+          Create
+        </Button>
+      </chakra.form>
     </div>
   );
 };

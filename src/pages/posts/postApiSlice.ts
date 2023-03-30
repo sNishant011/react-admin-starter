@@ -1,5 +1,7 @@
 import { apiSlice } from "@/app/apiSlice";
 
+import { Post } from "../../types";
+
 export const postApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getAllPosts: builder.query<Post[], null>({

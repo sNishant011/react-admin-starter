@@ -3,12 +3,13 @@ import {
   Box,
   Center,
   Heading,
-  Image,
   Stack,
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
 import { FC } from "react";
+
+import { Post } from "@/types";
 
 const PostCard: FC<{ post: Post }> = ({ post }) => {
   return (
